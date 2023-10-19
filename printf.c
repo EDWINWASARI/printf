@@ -1,4 +1,7 @@
 #include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
+#include <string.h>
 
 /**
  * print_format - Prints characters based on the format specifier.
@@ -58,4 +61,19 @@ addition += write(1, format, 1);
 }
 va_end(args);
 return (addition);
+}
+/**
+ * main - Entry point of the program
+ *
+ * Description: The main function demonstrates the usage of the custom _printf
+ * function by printing formatted output.
+ *
+ * Return: Always 0 (Success)
+ */
+int main(void)
+{
+int n;
+n = _printf("Hello, %c, %s, and %%%c\n", 'W', "World", '!');
+_printf("Characters printed: %d\n", n);
+return (0);
 }
