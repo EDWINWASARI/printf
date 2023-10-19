@@ -63,7 +63,7 @@ else
 {
 addition += write(1, format, 1);
 }
-++format;
+format++;
 }
 va_end(args);
 return (addition);
