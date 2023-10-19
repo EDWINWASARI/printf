@@ -26,7 +26,7 @@ print += write(1, str, len);
 break;
 }
 case '%':
-print += write(1, "%%", 1);
+print += write(1, "%", 1);
 break;
 default:
 print += write(1, &format, 1);
