@@ -1,7 +1,4 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
-#include <string.h>
 
 /**
  * print_format - Prints characters based on the format specifier.
