@@ -29,7 +29,7 @@ print += write(1, str, len);
 break;
 }
 case '%':
-print += write(1, "%", 1);
+print += write(1, "%%", 1);
 break;
 default:
 print += write(1, &format, 1);
@@ -61,19 +61,4 @@ addition += write(1, format, 1);
 }
 va_end(args);
 return (addition);
-}
-/**
- * main - Entry point of the program
- *
- * Description: The main function demonstrates the usage of the custom _printf
- * function by printing formatted output.
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-int n;
-n = _printf("Hello, %c, %s, and %%%c\n", 'W', "World", '!');
-_printf("Characters printed: %d\n", n);
-return (0);
 }
