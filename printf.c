@@ -5,39 +5,39 @@
  * @format: The format specifier ('c', 's', or '%').
  * @args: The va_list containing the arguments.
  *
- * Return: The number of characters printed.
+ * Return: The number of characters printed, addition
  */
 int print_format(char format, va_list args)
 {
-int print = 0;
+int addition = 0;
 switch (format)
 {
 case 'c':
 {
 char c = va_arg(args, int);
-print += write(1, &c, 1);
+addition += write(1, &c, 1);
 break;
 }
 case 's':
 {
 char *str = va_arg(args, char*);
 int len = strlen(str);
-print += write(1, str, len);
+addition += write(1, str, len);
 break;
 }
 case '%':
-print += write(1, "%", 1);
+addition += write(1, "%", 1);
 break;
 default:
-print += write(1, &format, 1);
+addition += write(1, &format, 1);
 }
-return (print);
+return (addition);
 }
 
 /**
  * _printf - Produces output according to a format.
  * @format: A format string with format specifiers.
- * Return: The number of characters printed.
+ * Return: The number of characters printed, addition.
  */
 int _printf(const char *format, ...)
 {
