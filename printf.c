@@ -48,9 +48,22 @@ int _printf(const char *format, ...)
 int addition = 0;
 va_list args;
 va_start(args, format);
-while (*format)
+while (*format != '\0')
 {
-addition += print_format(*(format++), args);
+if (*format == '%')
+{
+if (*(format + 1) == '\0')
+{
+va_end(args);
+return (-1);
+}
+addition += print_format(*(++format), args);
+}
+else
+{
+addition += write(1, format, 1);
+}
+++format;
 }
 va_end(args);
 return (addition);
