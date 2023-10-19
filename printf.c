@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 
 /**
  * print_format - Prints characters based on the format specifier.
@@ -47,17 +48,9 @@ int _printf(const char *format, ...)
 int addition = 0;
 va_list args;
 va_start(args, format);
-while (*format != '\0')
+while (*format)
 {
-if (*format == '%')
-{
-addition += print_format(*(++format), args);
-}
-else
-{
-addition += write(1, format, 1);
-}
-++format;
+addition += print_format(*(format++), args);
 }
 va_end(args);
 return (addition);
