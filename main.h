@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+int print_format(char format, va_list args);
 int _printf(const char *format, ...);
-void print_buffer(char buffer[], int *buff_ind);
 
 #endif
