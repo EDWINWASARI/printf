@@ -41,18 +41,30 @@ return (print);
  */
 int _printf(const char *format, ...)
 {
-int addition = 0;
 va_list args;
+int addition = 0;
+{
 if (format == NULL)
 return (-1);
+}
 va_start(args, format);
 while (*format)
 {
 if (*format == '%')
 {
-write(1, format, 1);
+if (*(format + 1) == '\0')
+{
+va_end(args);
+return (-1);
 }
-format++;
+addition += print_format(*(++format), args);
 }
+else
+{
+addition += write(1, format, 1);
+}
+++format;
+}
+va_end(args);
 return (addition);
 }
