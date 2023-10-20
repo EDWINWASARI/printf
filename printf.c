@@ -12,10 +12,12 @@ int _printf(const char *format, ...)
 {
 va_list args;
 int addition = 0;
+
 if (format == NULL)
 {
 return (-1);
 }
+
 va_start(args, format);
 while (*format)
 {
@@ -35,10 +37,10 @@ addition += write(1, format, 1);
 }
 format++;
 }
+
 va_end(args);
 return (addition);
 }
-
 
 /**
  * print_format - Handles printing for format specifiers.
@@ -50,7 +52,7 @@ return (addition);
 int print_format(char format, va_list args)
 {
 int addition = 0;
-int len = 0;
+
 switch (format)
 {
 case 'c':
@@ -62,6 +64,7 @@ break;
 case 's':
 {
 char *str = va_arg(args, char*);
+int len = 0;
 while (str[len] != '\0')
 len++;
 addition += write(1, str, len);
@@ -75,3 +78,4 @@ addition += write(1, &format, 1);
 }
 return (addition);
 }
+
