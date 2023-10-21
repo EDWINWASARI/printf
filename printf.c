@@ -1,81 +1,65 @@
 #include "main.h"
-#include <stdarg.h>
-#include <unistd.h>
+
+void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _printf - Produces output according to a format.
- * @format: A format string with format specifiers.
- *
- * Return: The number of characters printed.
+ * _printf - Printf function
+ * @format: format.
+ * Return: Printed chars.
  */
 int _printf(const char *format, ...)
 {
-va_list args;
-int addition = 0;
+	int b, added = 0, printed = 0;
+	int flags, width, precision, size, buff_ind = 0;
+	va_list list;
+	char buffer[BUFF_SIZE];
 
-if (format == NULL)
-{
-return (-1);
-}
+	if (format == NULL)
+		return (-1);
 
-va_start(args, format);
-while (*format)
-{
-if (*format == '%')
-{
-if (*(format + 1) == '\0')
-{
-va_end(args);
-return (-1);
-}
-format++;
-addition += print_format(*format, args);
-}
-else
-{
-addition += write(1, format, 1);
-}
-format++;
-}
+	va_start(list, format);
 
-va_end(args);
-return (addition);
+	for (b = 0; format && format[b] != '\0'; b++)
+	{
+		if (format[b] != '%')
+		{
+			buffer[buff_ind++] = format[b];
+			if (buff_ind == BUFF_SIZE)
+				print_buffer(buffer, &buff_ind);
+			printed++;
+		}
+		else
+		{
+			print_buffer(buffer, &buff_ind);
+			flags = get_flags(format, &b);
+			width = get_width(format, &b, list);
+			precision = get_precision(format, &b, list);
+			size = get_size(format, &b);
+			++b;
+			printed = handle_print(format, &b, list, buffer,
+				flags, width, precision, size);
+			if (added == -1)
+				return (-1);
+			printed += added;
+		}
+	}
+
+	print_buffer(buffer, &buff_ind);
+
+	va_end(list);
+
+	return (printed);
 }
 
 /**
- * print_format - Handles printing for format specifiers.
- * @format: The format specifier ('c', 's', or '%').
- * @args: The va_list containing the arguments.
- *
- * Return: The number of characters printed.
+ * print_buffer - Prints the contents of the buffer if it exist
+ * @buffer: Array of chars
+ * @buff_ind: Index at which to add next char, represents the length.
  */
-int print_format(char format, va_list args)
+void print_buffer(char buffer[], int *buff_ind)
 {
-int addition = 0;
+	if (*buff_ind > 0)
+		write(1, &buffer[0], *buff_ind);
 
-switch (format)
-{
-case 'c':
-{
-char c = va_arg(args, int);
-addition += write(1, &c, 1);
-break;
+	*buff_ind = 0;
 }
-case 's':
-{
-char *str = va_arg(args, char*);
-int len = 0;
-while (str[len] != '\0')
-len++;
-addition += write(1, str, len);
-break;
-}
-case '%':
-addition += write(1, "%", 1);
-break;
-default:
-addition += write(1, &format, 1);
-}
-return (addition);
-}
-
